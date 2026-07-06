@@ -1,0 +1,18 @@
+spring.application.name=GestorLibreria
+
+# Base de datos
+spring.datasource.url=jdbc:postgresql://localhost:5434/libreria_db
+spring.datasource.username=libreria_user
+spring.datasource.password=libreria_pass
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+# Flyway se ejecuta manualmente via FlywayMigrationRunner, despues de que Hibernate crea las tablas
+spring.flyway.enabled=false
+
+# API Tipo de cambio
+exchange.api.url=https://v6.exchangerate-api.com/v6/{API_KEY}/latest/USD
+exchange.api.key=TU_API_KEY_AQUI
+
+# Licencia
+licencia.validacion.activa=true

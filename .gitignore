@@ -1,0 +1,106 @@
+# =====================================================
+# .gitignore — Sistema de Gestión de Librería
+# Java 17 + Spring Boot 3.x + Maven + PostgreSQL
+# =====================================================
+
+# ─── Java ─────────────────────────────────────────
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+
+# ─── Maven ────────────────────────────────────────
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ─── Spring Boot ──────────────────────────────────
+HELP.md
+spring-shell.log
+
+# ─── Configuración sensible ───────────────────────
+# Nunca commitear credenciales ni API keys reales
+src/main/resources/application.properties
+src/main/resources/application-*.properties
+
+# Sí se commitea la plantilla de ejemplo
+!src/main/resources/application.properties.example
+
+# ─── Logs ─────────────────────────────────────────
+*.log
+logs/
+log/
+
+# ─── IDEs ─────────────────────────────────────────
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+bin/
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+
+# NetBeans
+nbactions.xml
+nb-configuration.xml
+
+# ─── Sistema Operativo ────────────────────────────
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ─── Docker ───────────────────────────────────────
+# El docker-compose.yml SÍ se commitea
+# Solo se ignoran overrides locales
+docker-compose.override.yml
+
+# ─── Flyway ───────────────────────────────────────
+# Los scripts SQL SÍ se commitean
+# Solo se ignoran backups locales
+*.sql.bak
+
+# ─── Tests ────────────────────────────────────────
+# Reportes de cobertura generados localmente
+target/site/
+target/surefire-reports/
+
+# ─── Misceláneos ──────────────────────────────────
+*.tmp
+*.temp
+*.swp
+*.swo
+.env
