@@ -7,6 +7,9 @@ spring.datasource.password=libreria_pass
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 
+# Flyway se ejecuta manualmente via FlywayMigrationRunner, despues de que Hibernate crea las tablas
+spring.flyway.enabled=false
+
 # API Tipo de cambio
 exchange.api.url=https://v6.exchangerate-api.com/v6/{API_KEY}/latest/USD
 exchange.api.key=TU_API_KEY_AQUI
