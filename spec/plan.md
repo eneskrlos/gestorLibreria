@@ -39,11 +39,11 @@ No se escribe código de una fase sin haber cerrado la anterior.
 ## Fase 2 — Repositorios y Capa de Datos
 **Objetivo:** Definir todas las consultas necesarias para los reportes y operaciones.
 
-- [ ] `PaisRepository` — findAll, findById
-- [ ] `TipoCambioRepository` — findTopByPaisOrderByFechaConsultaDesc (último tipo de cambio por país)
-- [ ] `EgresoRepository` — query de reporte con filtros fecha y país opcional, agrupado por país
-- [ ] `IngresoRepository` — query de reporte con filtros fecha y país opcional, agrupado por país (solo lectura)
-- [ ] `LicenciaRepository` — findByClave, findFirstByActivaTrue
+- [x] `PaisRepository` — findAll, findById
+- [x] `TipoCambioRepository` — findTopByPaisOrderByFechaConsultaDesc (último tipo de cambio por país)
+- [x] `EgresoRepository` — query de reporte con filtros fecha y país opcional, agrupado por país
+- [x] `IngresoRepository` — query de reporte con filtros fecha y país opcional, agrupado por país (solo lectura)
+- [x] `LicenciaRepository` — findByClave, findFirstByActivaTrue
 
 **Criterio de aceptación:** Tests unitarios de repositorios pasan correctamente.
 
