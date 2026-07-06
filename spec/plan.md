@@ -24,13 +24,13 @@ No se escribe código de una fase sin haber cerrado la anterior.
 ## Fase 1 — Entidades y Base de Datos (Code-First)
 **Objetivo:** Generar el esquema de BD a partir de las entidades JPA definidas en spec.md.
 
-- [ ] Crear entidad `Pais`
-- [ ] Crear entidad `TipoCambio` + enum `FuenteTipoCambio`
-- [ ] Crear entidad `Egreso`
-- [ ] Crear entidad `Ingreso` (inmutable — solo lectura)
-- [ ] Crear entidad `Licencia` + enum `TipoLicencia`
-- [ ] Verificar que Hibernate genera las tablas correctamente en la BD
-- [ ] Verificar que Flyway inserta los países iniciales
+- [x] Crear entidad `Pais`
+- [x] Crear entidad `TipoCambio` + enum `FuenteTipoCambio`
+- [x] Crear entidad `Egreso`
+- [x] Crear entidad `Ingreso` (inmutable — solo lectura)
+- [x] Crear entidad `Licencia` + enum `TipoLicencia`
+- [x] Verificar que Hibernate genera las tablas correctamente en la BD
+- [x] Verificar que Flyway inserta los países iniciales
 
 **Criterio de aceptación:** Las 5 tablas existen en PostgreSQL con sus relaciones y datos iniciales.
 
