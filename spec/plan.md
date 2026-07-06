@@ -10,12 +10,12 @@ No se escribe código de una fase sin haber cerrado la anterior.
 ## Fase 0 — Infraestructura y Configuración Base
 **Objetivo:** Tener el proyecto Spring Boot corriendo y conectado a la BD en Docker.
 
-- [ ] Levantar contenedor PostgreSQL con Docker Compose (puerto 5434)
-- [ ] Crear proyecto Spring Boot con Maven
+- [x] Levantar contenedor PostgreSQL con Docker Compose (puerto 5434)
+- [x] Crear proyecto Spring Boot con Maven
       Dependencias: Spring Web, Spring Data JPA, PostgreSQL Driver, Flyway, Lombok, Validation
-- [ ] Configurar `application.properties` con conexión a la BD
-- [ ] Verificar conexión exitosa a la base de datos
-- [ ] Crear script Flyway `V1__insert_paises.sql` con datos iniciales de países
+- [x] Configurar `application.properties` con conexión a la BD
+- [x] Verificar conexión exitosa a la base de datos
+- [x] Crear script Flyway `V1__insert_paises.sql` con datos iniciales de países
 
 **Criterio de aceptación:** La aplicación arranca sin errores y se conecta a PostgreSQL.
 
