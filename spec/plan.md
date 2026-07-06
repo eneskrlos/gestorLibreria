@@ -26,7 +26,7 @@ No se escribe código de una fase sin haber cerrado la anterior.
 
 - [x] Crear entidad `Pais`
 - [x] Crear entidad `TipoCambio` + enum `FuenteTipoCambio`
-- [ ] Crear entidad `Egreso`
+- [x] Crear entidad `Egreso`
 - [ ] Crear entidad `Ingreso` (inmutable — solo lectura)
 - [ ] Crear entidad `Licencia` + enum `TipoLicencia`
 - [ ] Verificar que Hibernate genera las tablas correctamente en la BD
