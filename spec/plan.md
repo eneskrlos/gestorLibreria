@@ -43,7 +43,7 @@ No se escribe código de una fase sin haber cerrado la anterior.
 - [x] `TipoCambioRepository` — findTopByPaisOrderByFechaConsultaDesc (último tipo de cambio por país)
 - [x] `EgresoRepository` — query de reporte con filtros fecha y país opcional, agrupado por país
 - [x] `IngresoRepository` — query de reporte con filtros fecha y país opcional, agrupado por país (solo lectura)
-- [ ] `LicenciaRepository` — findByClave, findFirstByActivaTrue
+- [x] `LicenciaRepository` — findByClave, findFirstByActivaTrue
 
 **Criterio de aceptación:** Tests unitarios de repositorios pasan correctamente.
 
