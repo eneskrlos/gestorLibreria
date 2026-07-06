@@ -28,7 +28,7 @@ No se escribe código de una fase sin haber cerrado la anterior.
 - [x] Crear entidad `TipoCambio` + enum `FuenteTipoCambio`
 - [x] Crear entidad `Egreso`
 - [x] Crear entidad `Ingreso` (inmutable — solo lectura)
-- [ ] Crear entidad `Licencia` + enum `TipoLicencia`
+- [x] Crear entidad `Licencia` + enum `TipoLicencia`
 - [ ] Verificar que Hibernate genera las tablas correctamente en la BD
 - [ ] Verificar que Flyway inserta los países iniciales
 
