@@ -24,7 +24,7 @@ No se escribe código de una fase sin haber cerrado la anterior.
 ## Fase 1 — Entidades y Base de Datos (Code-First)
 **Objetivo:** Generar el esquema de BD a partir de las entidades JPA definidas en spec.md.
 
-- [ ] Crear entidad `Pais`
+- [x] Crear entidad `Pais`
 - [ ] Crear entidad `TipoCambio` + enum `FuenteTipoCambio`
 - [ ] Crear entidad `Egreso`
 - [ ] Crear entidad `Ingreso` (inmutable — solo lectura)
