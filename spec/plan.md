@@ -25,7 +25,7 @@ No se escribe código de una fase sin haber cerrado la anterior.
 **Objetivo:** Generar el esquema de BD a partir de las entidades JPA definidas en spec.md.
 
 - [x] Crear entidad `Pais`
-- [ ] Crear entidad `TipoCambio` + enum `FuenteTipoCambio`
+- [x] Crear entidad `TipoCambio` + enum `FuenteTipoCambio`
 - [ ] Crear entidad `Egreso`
 - [ ] Crear entidad `Ingreso` (inmutable — solo lectura)
 - [ ] Crear entidad `Licencia` + enum `TipoLicencia`
