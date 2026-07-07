@@ -103,8 +103,8 @@ por país, con subtotales en moneda local y USD.
 
 - [x] Crear query en `IngresoRepository` con los mismos filtros que egresos
 - [x] Crear `IngresoService` con método de reporte agrupado por país
-- [ ] Crear endpoint `GET /api/ingresos/reporte` en `IngresoController`
-- [ ] Verificar que no existe ningún endpoint de escritura para ingresos
+- [x] Crear endpoint `GET /api/ingresos/reporte` en `IngresoController`
+- [x] Verificar que no existe ningún endpoint de escritura para ingresos
 
 **Criterio de aceptación:** El reporte retorna ingresos correctamente filtrados y agrupados.
 No existe ningún endpoint POST/PUT/DELETE para ingresos.
