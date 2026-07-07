@@ -102,7 +102,7 @@ por país, con subtotales en moneda local y USD.
 > Se implementa con la estructura definida en spec.md y se adapta al recibir la BD real.
 
 - [x] Crear query en `IngresoRepository` con los mismos filtros que egresos
-- [ ] Crear `IngresoService` con método de reporte agrupado por país
+- [x] Crear `IngresoService` con método de reporte agrupado por país
 - [ ] Crear endpoint `GET /api/ingresos/reporte` en `IngresoController`
 - [ ] Verificar que no existe ningún endpoint de escritura para ingresos
 
