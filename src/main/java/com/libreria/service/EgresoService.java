@@ -3,11 +3,17 @@ package com.libreria.service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.libreria.dto.EgresoRequestDto;
 import com.libreria.dto.EgresoResponseDto;
+import com.libreria.dto.ReporteEgresosDto;
+import com.libreria.dto.ReporteFilterDto;
 import com.libreria.entity.Egreso;
 import com.libreria.entity.Pais;
 import com.libreria.entity.TipoCambio;
@@ -53,5 +59,35 @@ public class EgresoService {
                 egreso.getImporteUsd(),
                 egreso.getPais().getNombre(),
                 egreso.getFechaRegistro());
+    }
+
+    public List<ReporteEgresosDto> generarReporte(ReporteFilterDto filtro) {
+        List<Egreso> egresos = egresoRepository.buscarPorFiltros(
+                filtro.getFechaInicio(), filtro.getFechaFin(), filtro.getPaisId());
+
+        Map<Long, List<Egreso>> egresosPorPais = egresos.stream()
+                .collect(Collectors.groupingBy(e -> e.getPais().getId(), LinkedHashMap::new, Collectors.toList()));
+
+        return egresosPorPais.values().stream()
+                .map(this::toReporteEgresosDto)
+                .collect(Collectors.toList());
+    }
+
+    private ReporteEgresosDto toReporteEgresosDto(List<Egreso> egresosDelPais) {
+        Pais pais = egresosDelPais.get(0).getPais();
+
+        BigDecimal totalMonedaLocal = egresosDelPais.stream()
+                .map(Egreso::getImporteMonedaLocal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal totalUsd = egresosDelPais.stream()
+                .map(Egreso::getImporteUsd)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        List<EgresoResponseDto> egresoDtos = egresosDelPais.stream()
+                .map(this::toResponseDto)
+                .collect(Collectors.toList());
+
+        return new ReporteEgresosDto(pais.getNombre(), pais.getMonedaCodigo(), egresoDtos, totalMonedaLocal, totalUsd);
     }
 }
