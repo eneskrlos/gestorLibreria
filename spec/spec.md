@@ -345,7 +345,11 @@ public class IngresoResponseDto {
 - Al inicio de cada request, un interceptor valida que exista una `Licencia` activa y vigente.
 - Si `fechaVencimiento < LocalDate.now()` → la licencia se marca como `activa = false`.
 - Si no hay licencia vigente → responde `HTTP 403` con mensaje claro para el usuario.
-- La validación se omite para el endpoint `/api/licencia/activar`.
+- La validación se omite para los endpoints `/api/licencia/activar` y `/api/licencia/estado`.
+  Este último también queda excluido para que el frontend pueda consultar el estado real de la
+  licencia (`vigente: true/false`) incluso cuando no hay ninguna activa — de lo contrario, el
+  propio interceptor respondería con su 403 genérico antes de llegar al controller, y el caso
+  `vigente: false` nunca sería alcanzable vía HTTP.
 - Al activar una licencia (`POST /api/licencia/activar`), si la clave corresponde a una
   licencia cuya `fechaVencimiento` ya pasó, **no se activa**: se responde con un mensaje
   claro para el usuario, por ejemplo:
