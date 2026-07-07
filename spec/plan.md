@@ -86,9 +86,9 @@ se calcula y persiste correctamente.
 - [x] Crear query JPQL en `EgresoRepository` con parámetros fecha_inicio, fecha_fin, pais_id (nullable)
 - [x] Agregar método en `EgresoService` que agrupa los resultados por país
 - [x] Calcular subtotales por país (total moneda local, total USD)
-- [ ] Crear endpoint `GET /api/egresos/reporte` en `EgresoController`
+- [x] Crear endpoint `GET /api/egresos/reporte` en `EgresoController`
       → Parámetros: `fechaInicio`, `fechaFin`, `paisId` (opcional)
-- [ ] Retornar lista de `ReporteEgresosDto` agrupada por país
+- [x] Retornar lista de `ReporteEgresosDto` agrupada por país
 
 **Criterio de aceptación:** El reporte retorna egresos correctamente filtrados, agrupados
 por país, con subtotales en moneda local y USD.
