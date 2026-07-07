@@ -52,13 +52,13 @@ No se escribe código de una fase sin haber cerrado la anterior.
 ## Fase 3 — Servicio de Tipo de Cambio
 **Objetivo:** Integrar la API externa con fallback a BD.
 
-- [ ] Crear `ExchangeRateApiClient` (RestTemplate o WebClient)
+- [x] Crear `ExchangeRateApiClient` (RestTemplate o WebClient)
       → Consume `ExchangeRate-API` y retorna el valor USD para una moneda dada
-- [ ] Crear `TipoCambioService`
+- [x] Crear `TipoCambioService`
       → `obtenerTipoCambio(Pais pais)`: intenta API, si falla usa último registro en BD
       → `guardarTipoCambio(Pais, valor, fuente)`: persiste el tipo de cambio consultado
-- [ ] Manejar correctamente el caso de fallo de API (timeout, sin conexión, moneda no disponible)
-- [ ] Loggear cuando se usa el fallback manual
+- [x] Manejar correctamente el caso de fallo de API (timeout, sin conexión, moneda no disponible)
+- [x] Loggear cuando se usa el fallback manual
 
 **Criterio de aceptación:** El servicio convierte correctamente ARS, BRL y EUR a USD.
 El fallback funciona cuando la API no está disponible.
