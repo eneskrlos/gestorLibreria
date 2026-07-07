@@ -346,6 +346,10 @@ public class IngresoResponseDto {
 - Si `fechaVencimiento < LocalDate.now()` → la licencia se marca como `activa = false`.
 - Si no hay licencia vigente → responde `HTTP 403` con mensaje claro para el usuario.
 - La validación se omite para el endpoint `/api/licencia/activar`.
+- Al activar una licencia (`POST /api/licencia/activar`), si la clave corresponde a una
+  licencia cuya `fechaVencimiento` ya pasó, **no se activa**: se responde con un mensaje
+  claro para el usuario, por ejemplo:
+  *"La licencia ingresada ya está vencida. Contacte al administrador para renovarla."*
 
 ---
 
