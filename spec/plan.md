@@ -114,7 +114,7 @@ No existe ningún endpoint POST/PUT/DELETE para ingresos.
 ## Fase 7 — Sistema de Licencias
 **Objetivo:** Implementar el control de acceso por licencia.
 
-- [ ] Crear `LicenciaService`
+- [x] Crear `LicenciaService`
       → `validarLicencia()`: verifica si existe licencia activa y vigente
       → `activarLicencia(clave)`: activa una licencia por su clave
       → `verificarVencimiento()`: marca como inactiva si venció
