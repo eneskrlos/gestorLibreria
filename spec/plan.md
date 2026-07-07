@@ -114,17 +114,17 @@ No existe ningún endpoint POST/PUT/DELETE para ingresos.
 ## Fase 7 — Sistema de Licencias
 **Objetivo:** Implementar el control de acceso por licencia.
 
-- [ ] Crear `LicenciaService`
+- [x] Crear `LicenciaService`
       → `validarLicencia()`: verifica si existe licencia activa y vigente
       → `activarLicencia(clave)`: activa una licencia por su clave
       → `verificarVencimiento()`: marca como inactiva si venció
-- [ ] Crear `LicenciaController`
+- [x] Crear `LicenciaController`
       → `GET /api/licencia/estado`
       → `POST /api/licencia/activar`
-- [ ] Crear `LicenciaInterceptor`
+- [x] Crear `LicenciaInterceptor`
       → Intercepta todos los requests excepto `/api/licencia/activar`
       → Si no hay licencia vigente → retorna HTTP 403 con mensaje claro
-- [ ] Registrar el interceptor en la configuración de Spring MVC
+- [x] Registrar el interceptor en la configuración de Spring MVC
 
 **Criterio de aceptación:** Sin licencia activa, todos los endpoints retornan 403.
 Con licencia activa, el sistema funciona normalmente.

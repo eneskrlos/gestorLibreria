@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,7 +16,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.libreria.entity.Ingreso;
+import com.libreria.entity.Licencia;
 import com.libreria.entity.Pais;
+import com.libreria.entity.TipoLicencia;
+import com.libreria.repository.LicenciaRepository;
 import com.libreria.repository.PaisRepository;
 
 import jakarta.persistence.EntityManager;
@@ -32,7 +36,16 @@ class IngresoControllerTest {
     private PaisRepository paisRepository;
 
     @Autowired
+    private LicenciaRepository licenciaRepository;
+
+    @Autowired
     private EntityManager entityManager;
+
+    @BeforeEach
+    void activarLicenciaDePrueba() {
+        licenciaRepository.save(new Licencia(null, "CLAVE-TEST-INGRESOS", LocalDate.now(),
+                LocalDate.now().plusMonths(1), TipoLicencia.MENSUAL, true));
+    }
 
     private Pais buscarPaisPorNombre(String nombre) {
         return paisRepository.findAll().stream()

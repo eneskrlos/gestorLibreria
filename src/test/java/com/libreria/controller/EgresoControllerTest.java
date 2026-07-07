@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,9 +24,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.libreria.dto.EgresoRequestDto;
 import com.libreria.entity.Egreso;
 import com.libreria.entity.FuenteTipoCambio;
+import com.libreria.entity.Licencia;
 import com.libreria.entity.Pais;
 import com.libreria.entity.TipoCambio;
+import com.libreria.entity.TipoLicencia;
 import com.libreria.repository.EgresoRepository;
+import com.libreria.repository.LicenciaRepository;
 import com.libreria.repository.PaisRepository;
 import com.libreria.repository.TipoCambioRepository;
 import com.libreria.service.exchange.ExchangeRateApiClient;
@@ -50,8 +54,17 @@ class EgresoControllerTest {
     @Autowired
     private EgresoRepository egresoRepository;
 
+    @Autowired
+    private LicenciaRepository licenciaRepository;
+
     @MockitoBean
     private ExchangeRateApiClient exchangeRateApiClient;
+
+    @BeforeEach
+    void activarLicenciaDePrueba() {
+        licenciaRepository.save(new Licencia(null, "CLAVE-TEST-EGRESOS", LocalDate.now(),
+                LocalDate.now().plusMonths(1), TipoLicencia.MENSUAL, true));
+    }
 
     private Pais buscarPaisPorNombre(String nombre) {
         return paisRepository.findAll().stream()
