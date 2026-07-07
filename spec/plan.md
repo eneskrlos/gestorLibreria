@@ -101,7 +101,7 @@ por país, con subtotales en moneda local y USD.
 > ⚠️ Esta fase puede requerir ajuste cuando se reciba la estructura de BD del cliente.
 > Se implementa con la estructura definida en spec.md y se adapta al recibir la BD real.
 
-- [ ] Crear query en `IngresoRepository` con los mismos filtros que egresos
+- [x] Crear query en `IngresoRepository` con los mismos filtros que egresos
 - [ ] Crear `IngresoService` con método de reporte agrupado por país
 - [ ] Crear endpoint `GET /api/ingresos/reporte` en `IngresoController`
 - [ ] Verificar que no existe ningún endpoint de escritura para ingresos
