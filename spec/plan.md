@@ -68,7 +68,7 @@ El fallback funciona cuando la API no está disponible.
 ## Fase 4 — Módulo de Egresos
 **Objetivo:** Implementar el alta de egresos con conversión automática.
 
-- [ ] Crear `EgresoService`
+- [x] Crear `EgresoService`
       → `registrarEgreso(EgresoRequestDto)`: orquesta la conversión y persistencia
       → Flujo: obtener país → obtener tipo de cambio → calcular USD → persistir egreso
 - [ ] Crear `EgresoController` con endpoint `POST /api/egresos`
