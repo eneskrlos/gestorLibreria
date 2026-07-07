@@ -71,9 +71,9 @@ El fallback funciona cuando la API no está disponible.
 - [x] Crear `EgresoService`
       → `registrarEgreso(EgresoRequestDto)`: orquesta la conversión y persistencia
       → Flujo: obtener país → obtener tipo de cambio → calcular USD → persistir egreso
-- [ ] Crear `EgresoController` con endpoint `POST /api/egresos`
-- [ ] Validar todos los campos del `EgresoRequestDto`
-- [ ] Retornar `EgresoResponseDto` con los datos completos incluyendo importe en USD
+- [x] Crear `EgresoController` con endpoint `POST /api/egresos`
+- [x] Validar todos los campos del `EgresoRequestDto`
+- [x] Retornar `EgresoResponseDto` con los datos completos incluyendo importe en USD
 
 **Criterio de aceptación:** Se puede registrar un egreso via API REST y el importe en USD
 se calcula y persiste correctamente.
