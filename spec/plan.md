@@ -135,8 +135,8 @@ Una licencia vencida se marca automáticamente como inactiva.
 ## Fase 8 — Endpoint de Países
 **Objetivo:** Exponer los países para poblar los selectores del frontend.
 
-- [ ] Crear `PaisController` con `GET /api/paises`
-- [ ] Retornar lista de países con id, nombre, monedaCodigo, monedaNombre
+- [x] Crear `PaisController` con `GET /api/paises`
+- [x] Retornar lista de países con id, nombre, monedaCodigo, monedaNombre
 
 **Criterio de aceptación:** El endpoint retorna todos los países registrados.
 
