@@ -121,10 +121,10 @@ No existe ningún endpoint POST/PUT/DELETE para ingresos.
 - [x] Crear `LicenciaController`
       → `GET /api/licencia/estado`
       → `POST /api/licencia/activar`
-- [ ] Crear `LicenciaInterceptor`
+- [x] Crear `LicenciaInterceptor`
       → Intercepta todos los requests excepto `/api/licencia/activar`
       → Si no hay licencia vigente → retorna HTTP 403 con mensaje claro
-- [ ] Registrar el interceptor en la configuración de Spring MVC
+- [x] Registrar el interceptor en la configuración de Spring MVC
 
 **Criterio de aceptación:** Sin licencia activa, todos los endpoints retornan 403.
 Con licencia activa, el sistema funciona normalmente.
