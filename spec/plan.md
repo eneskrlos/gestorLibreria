@@ -83,7 +83,7 @@ se calcula y persiste correctamente.
 ## Fase 5 — Reporte de Egresos
 **Objetivo:** Implementar el reporte filtrado y agrupado por país.
 
-- [ ] Crear query JPQL en `EgresoRepository` con parámetros fecha_inicio, fecha_fin, pais_id (nullable)
+- [x] Crear query JPQL en `EgresoRepository` con parámetros fecha_inicio, fecha_fin, pais_id (nullable)
 - [ ] Agregar método en `EgresoService` que agrupa los resultados por país
 - [ ] Calcular subtotales por país (total moneda local, total USD)
 - [ ] Crear endpoint `GET /api/egresos/reporte` en `EgresoController`
