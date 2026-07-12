@@ -52,13 +52,13 @@ No se escribe código de una fase sin haber cerrado la anterior.
 ## Fase 3 — Servicio de Tipo de Cambio
 **Objetivo:** Integrar la API externa con fallback a BD.
 
-- [ ] Crear `ExchangeRateApiClient` (RestTemplate o WebClient)
+- [x] Crear `ExchangeRateApiClient` (RestTemplate o WebClient)
       → Consume `ExchangeRate-API` y retorna el valor USD para una moneda dada
-- [ ] Crear `TipoCambioService`
+- [x] Crear `TipoCambioService`
       → `obtenerTipoCambio(Pais pais)`: intenta API, si falla usa último registro en BD
       → `guardarTipoCambio(Pais, valor, fuente)`: persiste el tipo de cambio consultado
-- [ ] Manejar correctamente el caso de fallo de API (timeout, sin conexión, moneda no disponible)
-- [ ] Loggear cuando se usa el fallback manual
+- [x] Manejar correctamente el caso de fallo de API (timeout, sin conexión, moneda no disponible)
+- [x] Loggear cuando se usa el fallback manual
 
 **Criterio de aceptación:** El servicio convierte correctamente ARS, BRL y EUR a USD.
 El fallback funciona cuando la API no está disponible.
@@ -68,12 +68,12 @@ El fallback funciona cuando la API no está disponible.
 ## Fase 4 — Módulo de Egresos
 **Objetivo:** Implementar el alta de egresos con conversión automática.
 
-- [ ] Crear `EgresoService`
+- [x] Crear `EgresoService`
       → `registrarEgreso(EgresoRequestDto)`: orquesta la conversión y persistencia
       → Flujo: obtener país → obtener tipo de cambio → calcular USD → persistir egreso
-- [ ] Crear `EgresoController` con endpoint `POST /api/egresos`
-- [ ] Validar todos los campos del `EgresoRequestDto`
-- [ ] Retornar `EgresoResponseDto` con los datos completos incluyendo importe en USD
+- [x] Crear `EgresoController` con endpoint `POST /api/egresos`
+- [x] Validar todos los campos del `EgresoRequestDto`
+- [x] Retornar `EgresoResponseDto` con los datos completos incluyendo importe en USD
 
 **Criterio de aceptación:** Se puede registrar un egreso via API REST y el importe en USD
 se calcula y persiste correctamente.
@@ -83,12 +83,12 @@ se calcula y persiste correctamente.
 ## Fase 5 — Reporte de Egresos
 **Objetivo:** Implementar el reporte filtrado y agrupado por país.
 
-- [ ] Crear query JPQL en `EgresoRepository` con parámetros fecha_inicio, fecha_fin, pais_id (nullable)
-- [ ] Agregar método en `EgresoService` que agrupa los resultados por país
-- [ ] Calcular subtotales por país (total moneda local, total USD)
-- [ ] Crear endpoint `GET /api/egresos/reporte` en `EgresoController`
+- [x] Crear query JPQL en `EgresoRepository` con parámetros fecha_inicio, fecha_fin, pais_id (nullable)
+- [x] Agregar método en `EgresoService` que agrupa los resultados por país
+- [x] Calcular subtotales por país (total moneda local, total USD)
+- [x] Crear endpoint `GET /api/egresos/reporte` en `EgresoController`
       → Parámetros: `fechaInicio`, `fechaFin`, `paisId` (opcional)
-- [ ] Retornar lista de `ReporteEgresosDto` agrupada por país
+- [x] Retornar lista de `ReporteEgresosDto` agrupada por país
 
 **Criterio de aceptación:** El reporte retorna egresos correctamente filtrados, agrupados
 por país, con subtotales en moneda local y USD.
@@ -101,10 +101,10 @@ por país, con subtotales en moneda local y USD.
 > ⚠️ Esta fase puede requerir ajuste cuando se reciba la estructura de BD del cliente.
 > Se implementa con la estructura definida en spec.md y se adapta al recibir la BD real.
 
-- [ ] Crear query en `IngresoRepository` con los mismos filtros que egresos
-- [ ] Crear `IngresoService` con método de reporte agrupado por país
-- [ ] Crear endpoint `GET /api/ingresos/reporte` en `IngresoController`
-- [ ] Verificar que no existe ningún endpoint de escritura para ingresos
+- [x] Crear query en `IngresoRepository` con los mismos filtros que egresos
+- [x] Crear `IngresoService` con método de reporte agrupado por país
+- [x] Crear endpoint `GET /api/ingresos/reporte` en `IngresoController`
+- [x] Verificar que no existe ningún endpoint de escritura para ingresos
 
 **Criterio de aceptación:** El reporte retorna ingresos correctamente filtrados y agrupados.
 No existe ningún endpoint POST/PUT/DELETE para ingresos.
@@ -114,17 +114,17 @@ No existe ningún endpoint POST/PUT/DELETE para ingresos.
 ## Fase 7 — Sistema de Licencias
 **Objetivo:** Implementar el control de acceso por licencia.
 
-- [ ] Crear `LicenciaService`
+- [x] Crear `LicenciaService`
       → `validarLicencia()`: verifica si existe licencia activa y vigente
       → `activarLicencia(clave)`: activa una licencia por su clave
       → `verificarVencimiento()`: marca como inactiva si venció
-- [ ] Crear `LicenciaController`
+- [x] Crear `LicenciaController`
       → `GET /api/licencia/estado`
       → `POST /api/licencia/activar`
-- [ ] Crear `LicenciaInterceptor`
+- [x] Crear `LicenciaInterceptor`
       → Intercepta todos los requests excepto `/api/licencia/activar`
       → Si no hay licencia vigente → retorna HTTP 403 con mensaje claro
-- [ ] Registrar el interceptor en la configuración de Spring MVC
+- [x] Registrar el interceptor en la configuración de Spring MVC
 
 **Criterio de aceptación:** Sin licencia activa, todos los endpoints retornan 403.
 Con licencia activa, el sistema funciona normalmente.
@@ -135,8 +135,8 @@ Una licencia vencida se marca automáticamente como inactiva.
 ## Fase 8 — Endpoint de Países
 **Objetivo:** Exponer los países para poblar los selectores del frontend.
 
-- [ ] Crear `PaisController` con `GET /api/paises`
-- [ ] Retornar lista de países con id, nombre, monedaCodigo, monedaNombre
+- [x] Crear `PaisController` con `GET /api/paises`
+- [x] Retornar lista de países con id, nombre, monedaCodigo, monedaNombre
 
 **Criterio de aceptación:** El endpoint retorna todos los países registrados.
 
@@ -145,10 +145,10 @@ Una licencia vencida se marca automáticamente como inactiva.
 ## Fase 9 — Manejo Global de Errores
 **Objetivo:** Respuestas de error consistentes y comprensibles.
 
-- [ ] Crear `GlobalExceptionHandler` con `@RestControllerAdvice`
-- [ ] Manejar: validaciones (`MethodArgumentNotValidException`), entidad no encontrada, error de API de cambio, licencia vencida
-- [ ] Todos los errores retornan JSON con estructura: `{ "error": "...", "mensaje": "..." }`
-- [ ] Los mensajes deben ser comprensibles para un usuario no técnico
+- [x] Crear `GlobalExceptionHandler` con `@RestControllerAdvice`
+- [x] Manejar: validaciones (`MethodArgumentNotValidException`), entidad no encontrada, error de API de cambio, licencia vencida
+- [x] Todos los errores retornan JSON con estructura: `{ "error": "...", "mensaje": "..." }`
+- [x] Los mensajes deben ser comprensibles para un usuario no técnico
 
 **Criterio de aceptación:** Ningún error expone stack traces al cliente.
 Todos los errores tienen un mensaje claro en español.
