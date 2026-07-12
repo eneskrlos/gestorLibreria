@@ -146,9 +146,9 @@ Una licencia vencida se marca automáticamente como inactiva.
 **Objetivo:** Respuestas de error consistentes y comprensibles.
 
 - [x] Crear `GlobalExceptionHandler` con `@RestControllerAdvice`
-- [ ] Manejar: validaciones (`MethodArgumentNotValidException`), entidad no encontrada, error de API de cambio, licencia vencida
-- [ ] Todos los errores retornan JSON con estructura: `{ "error": "...", "mensaje": "..." }`
-- [ ] Los mensajes deben ser comprensibles para un usuario no técnico
+- [x] Manejar: validaciones (`MethodArgumentNotValidException`), entidad no encontrada, error de API de cambio, licencia vencida
+- [x] Todos los errores retornan JSON con estructura: `{ "error": "...", "mensaje": "..." }`
+- [x] Los mensajes deben ser comprensibles para un usuario no técnico
 
 **Criterio de aceptación:** Ningún error expone stack traces al cliente.
 Todos los errores tienen un mensaje claro en español.
