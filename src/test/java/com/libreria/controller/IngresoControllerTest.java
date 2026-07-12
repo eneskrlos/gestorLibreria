@@ -77,6 +77,8 @@ class IngresoControllerTest {
     void obtenerReporte_sinFechaInicio_retorna400() throws Exception {
         mockMvc.perform(get("/api/ingresos/reporte")
                         .param("fechaFin", "2026-05-31"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Datos inválidos"))
+                .andExpect(jsonPath("$.mensaje").exists());
     }
 }

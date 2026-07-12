@@ -1,7 +1,6 @@
 package com.libreria.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -22,7 +21,6 @@ import com.libreria.dto.LicenciaActivarRequestDto;
 import com.libreria.entity.Licencia;
 import com.libreria.entity.TipoLicencia;
 import com.libreria.repository.LicenciaRepository;
-import com.libreria.service.LicenciaVencidaException;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -79,23 +77,39 @@ class LicenciaControllerTest {
         mockMvc.perform(post("/api/licencia/activar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Datos inválidos"))
+                .andExpect(jsonPath("$.mensaje").exists());
     }
 
     @Test
-    void activarLicencia_conClaveVencida_noLaActiva() {
+    void activarLicencia_conClaveInexistente_retorna404() throws Exception {
+        LicenciaActivarRequestDto request = new LicenciaActivarRequestDto();
+        request.setClave("CLAVE-QUE-NO-EXISTE");
+
+        mockMvc.perform(post("/api/licencia/activar")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").value("Recurso no encontrado"))
+                .andExpect(jsonPath("$.mensaje").value("No se encontró ninguna licencia con la clave ingresada."));
+    }
+
+    @Test
+    void activarLicencia_conClaveVencida_noLaActiva() throws Exception {
         licenciaRepository.save(new Licencia(null, "CLAVE-VENCIDA", LocalDate.now().minusMonths(2),
                 LocalDate.now().minusDays(1), TipoLicencia.MENSUAL, false));
 
         LicenciaActivarRequestDto request = new LicenciaActivarRequestDto();
         request.setClave("CLAVE-VENCIDA");
 
-        // Sin GlobalExceptionHandler (Fase 9 pendiente), la excepcion de negocio se propaga
-        // tal cual bajo MockMvc en vez de convertirse en una respuesta HTTP mockeada.
-        assertThatThrownBy(() -> mockMvc.perform(post("/api/licencia/activar")
+        mockMvc.perform(post("/api/licencia/activar")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request))))
-                .hasCauseInstanceOf(LicenciaVencidaException.class);
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Licencia vencida"))
+                .andExpect(jsonPath("$.mensaje").value(
+                        "La licencia ingresada ya está vencida. Contacte al administrador para renovarla."));
 
         boolean sigueInactiva = licenciaRepository.findByClave("CLAVE-VENCIDA")
                 .map(licencia -> !licencia.getActiva())

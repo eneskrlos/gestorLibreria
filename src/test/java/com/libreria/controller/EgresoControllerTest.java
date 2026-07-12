@@ -33,6 +33,7 @@ import com.libreria.repository.LicenciaRepository;
 import com.libreria.repository.PaisRepository;
 import com.libreria.repository.TipoCambioRepository;
 import com.libreria.service.exchange.ExchangeRateApiClient;
+import com.libreria.service.exchange.ExchangeRateApiException;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -103,7 +104,9 @@ class EgresoControllerTest {
         mockMvc.perform(post("/api/egresos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Datos inválidos"))
+                .andExpect(jsonPath("$.mensaje").exists());
     }
 
     @Test
@@ -119,7 +122,46 @@ class EgresoControllerTest {
         mockMvc.perform(post("/api/egresos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Datos inválidos"))
+                .andExpect(jsonPath("$.mensaje").exists());
+    }
+
+    @Test
+    void registrarEgreso_conPaisInexistente_retorna404() throws Exception {
+        EgresoRequestDto request = new EgresoRequestDto();
+        request.setFecha(LocalDate.now());
+        request.setConcepto("Arancel aduanero");
+        request.setImporteMonedaLocal(new BigDecimal("500.00"));
+        request.setPaisId(999L);
+
+        mockMvc.perform(post("/api/egresos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").value("Recurso no encontrado"))
+                .andExpect(jsonPath("$.mensaje").value("No se encontró el país con id 999"));
+    }
+
+    @Test
+    void registrarEgreso_conApiCaidaYSinTipoCambioPrevio_retorna503() throws Exception {
+        Pais argentina = buscarPaisPorNombre("Argentina");
+        when(exchangeRateApiClient.obtenerValorUsd("ARS"))
+                .thenThrow(new ExchangeRateApiException("timeout"));
+
+        EgresoRequestDto request = new EgresoRequestDto();
+        request.setFecha(LocalDate.now());
+        request.setConcepto("Arancel aduanero");
+        request.setImporteMonedaLocal(new BigDecimal("500.00"));
+        request.setPaisId(argentina.getId());
+
+        mockMvc.perform(post("/api/egresos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isServiceUnavailable())
+                .andExpect(jsonPath("$.error").value("Servicio no disponible"))
+                .andExpect(jsonPath("$.mensaje").value(
+                        "No hay tipo de cambio disponible para Argentina y no se pudo consultar la API"));
     }
 
     @Test
@@ -147,6 +189,8 @@ class EgresoControllerTest {
     void obtenerReporte_sinFechaInicio_retorna400() throws Exception {
         mockMvc.perform(get("/api/egresos/reporte")
                         .param("fechaFin", "2026-05-31"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Datos inválidos"))
+                .andExpect(jsonPath("$.mensaje").exists());
     }
 }
