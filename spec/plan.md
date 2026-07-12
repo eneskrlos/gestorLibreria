@@ -145,7 +145,7 @@ Una licencia vencida se marca automáticamente como inactiva.
 ## Fase 9 — Manejo Global de Errores
 **Objetivo:** Respuestas de error consistentes y comprensibles.
 
-- [ ] Crear `GlobalExceptionHandler` con `@RestControllerAdvice`
+- [x] Crear `GlobalExceptionHandler` con `@RestControllerAdvice`
 - [ ] Manejar: validaciones (`MethodArgumentNotValidException`), entidad no encontrada, error de API de cambio, licencia vencida
 - [ ] Todos los errores retornan JSON con estructura: `{ "error": "...", "mensaje": "..." }`
 - [ ] Los mensajes deben ser comprensibles para un usuario no técnico
