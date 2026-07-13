@@ -74,6 +74,42 @@ class IngresoControllerTest {
     }
 
     @Test
+    void obtenerReporte_conFiltroDePais_devuelveSoloLosIngresosDeEsePais() throws Exception {
+        Pais argentina = buscarPaisPorNombre("Argentina");
+        Pais brasil = buscarPaisPorNombre("Brasil");
+        entityManager.persist(new Ingreso(8003L, LocalDate.of(2026, 5, 10), "F-8003",
+                new BigDecimal("100.00"), new BigDecimal("10.00"), new BigDecimal("110.00"), argentina));
+        entityManager.persist(new Ingreso(8004L, LocalDate.of(2026, 5, 12), "F-8004",
+                new BigDecimal("300.00"), new BigDecimal("30.00"), new BigDecimal("330.00"), brasil));
+        entityManager.flush();
+
+        mockMvc.perform(get("/api/ingresos/reporte")
+                        .param("fechaInicio", "2026-05-01")
+                        .param("fechaFin", "2026-05-31")
+                        .param("paisId", String.valueOf(argentina.getId())))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].paisNombre").value("Argentina"))
+                .andExpect(jsonPath("$[0].monedaCodigo").value("ARS"))
+                .andExpect(jsonPath("$[0].ingresos.length()").value(1))
+                .andExpect(jsonPath("$[0].totalGeneral").value(110.00));
+    }
+
+    @Test
+    void obtenerReporte_sinResultadosEnElRango_devuelveListaVacia() throws Exception {
+        Pais argentina = buscarPaisPorNombre("Argentina");
+        entityManager.persist(new Ingreso(8005L, LocalDate.of(2026, 5, 10), "F-8005",
+                new BigDecimal("100.00"), new BigDecimal("10.00"), new BigDecimal("110.00"), argentina));
+        entityManager.flush();
+
+        mockMvc.perform(get("/api/ingresos/reporte")
+                        .param("fechaInicio", "2020-01-01")
+                        .param("fechaFin", "2020-12-31"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(0));
+    }
+
+    @Test
     void obtenerReporte_sinFechaInicio_retorna400() throws Exception {
         mockMvc.perform(get("/api/ingresos/reporte")
                         .param("fechaFin", "2026-05-31"))
