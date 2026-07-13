@@ -163,7 +163,7 @@ Todos los errores tienen un mensaje claro en español.
 - [x] Prueba del sistema de licencias: sin licencia, con licencia vigente, con licencia vencida
 - [x] Prueba del fallback de tipo de cambio (simular fallo de API)
 - [ ] Ajuste de la entidad `Ingreso` si se recibe la BD del cliente
-- [ ] Revisión general de mensajes de error
+- [x] Revisión general de mensajes de error
 
 ---
 
