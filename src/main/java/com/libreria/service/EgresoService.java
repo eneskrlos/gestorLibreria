@@ -32,8 +32,7 @@ public class EgresoService {
 
     public EgresoResponseDto registrarEgreso(EgresoRequestDto request) {
         Pais pais = paisRepository.findById(request.getPaisId())
-                .orElseThrow(() -> new PaisNoEncontradoException(
-                        "No se encontró el país con id " + request.getPaisId()));
+                .orElseThrow(() -> new PaisNoEncontradoException("No se encontró el país seleccionado."));
 
         TipoCambio tipoCambio = tipoCambioService.obtenerTipoCambio(pais);
 

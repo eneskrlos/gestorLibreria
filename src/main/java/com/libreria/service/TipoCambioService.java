@@ -33,8 +33,8 @@ public class TipoCambioService {
 
             TipoCambio ultimoConocido = tipoCambioRepository.findTopByPaisOrderByFechaConsultaDesc(pais)
                     .orElseThrow(() -> new TipoCambioNoDisponibleException(
-                            "No hay tipo de cambio disponible para " + pais.getNombre()
-                                    + " y no se pudo consultar la API"));
+                            "No se pudo obtener el tipo de cambio actualizado para " + pais.getNombre()
+                                    + ". Intente nuevamente más tarde."));
 
             return guardarTipoCambio(pais, ultimoConocido.getValorUsd(), FuenteTipoCambio.MANUAL);
         }

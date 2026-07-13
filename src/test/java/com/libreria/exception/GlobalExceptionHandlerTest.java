@@ -33,6 +33,30 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
+    void manejarDatosInvalidos_traduceLosNombresDeCampoAEtiquetasComprensibles() {
+        BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "egresoRequestDto");
+        bindingResult.addError(new FieldError("egresoRequestDto", "paisId", "must not be null"));
+        BindException ex = new BindException(bindingResult);
+
+        ResponseEntity<ErrorResponseDto> response = handler.manejarDatosInvalidos(ex);
+
+        assertThat(response.getBody().mensaje()).contains("país").doesNotContain("paisId");
+    }
+
+    @Test
+    void manejarErrorInesperado_retorna500SinExponerElDetalleInternoDeLaExcepcion() {
+        Exception ex = new RuntimeException("detalle interno sensible de la excepcion");
+
+        ResponseEntity<ErrorResponseDto> response = handler.manejarErrorInesperado(ex);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+        assertThat(response.getBody().error()).isEqualTo("Error interno");
+        assertThat(response.getBody().mensaje())
+                .isEqualTo("Ocurrió un error inesperado. Por favor, intente nuevamente más tarde.")
+                .doesNotContain("detalle interno sensible de la excepcion");
+    }
+
+    @Test
     void manejarEntidadNoEncontrada_conPaisNoEncontrado_retorna404ConElMensajeOriginal() {
         PaisNoEncontradoException ex = new PaisNoEncontradoException("No se encontró el país con id 99");
 

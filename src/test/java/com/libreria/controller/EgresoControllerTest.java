@@ -141,7 +141,7 @@ class EgresoControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("Recurso no encontrado"))
-                .andExpect(jsonPath("$.mensaje").value("No se encontró el país con id 999"));
+                .andExpect(jsonPath("$.mensaje").value("No se encontró el país seleccionado."));
     }
 
     @Test
@@ -189,7 +189,7 @@ class EgresoControllerTest {
                 .andExpect(status().isServiceUnavailable())
                 .andExpect(jsonPath("$.error").value("Servicio no disponible"))
                 .andExpect(jsonPath("$.mensaje").value(
-                        "No hay tipo de cambio disponible para Argentina y no se pudo consultar la API"));
+                        "No se pudo obtener el tipo de cambio actualizado para Argentina. Intente nuevamente más tarde."));
     }
 
     @Test
