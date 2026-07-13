@@ -160,7 +160,7 @@ Todos los errores tienen un mensaje claro en español.
 
 - [x] Prueba completa del flujo de egresos: alta → conversión → reporte
 - [x] Prueba del reporte de ingresos con distintos filtros
-- [ ] Prueba del sistema de licencias: sin licencia, con licencia vigente, con licencia vencida
+- [x] Prueba del sistema de licencias: sin licencia, con licencia vigente, con licencia vencida
 - [ ] Prueba del fallback de tipo de cambio (simular fallo de API)
 - [ ] Ajuste de la entidad `Ingreso` si se recibe la BD del cliente
 - [ ] Revisión general de mensajes de error
