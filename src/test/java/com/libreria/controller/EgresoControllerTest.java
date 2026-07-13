@@ -165,6 +165,37 @@ class EgresoControllerTest {
     }
 
     @Test
+    void flujoCompleto_altaConversionYReporte_reflejaElEgresoRegistradoConImporteUsdCalculado() throws Exception {
+        Pais argentina = buscarPaisPorNombre("Argentina");
+        when(exchangeRateApiClient.obtenerValorUsd("ARS")).thenReturn(new BigDecimal("0.001100"));
+
+        EgresoRequestDto request = new EgresoRequestDto();
+        request.setFecha(LocalDate.of(2026, 6, 15));
+        request.setConcepto("Impuesto de exportación");
+        request.setImporteMonedaLocal(new BigDecimal("2000.00"));
+        request.setPaisId(argentina.getId());
+
+        mockMvc.perform(post("/api/egresos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.importeUsd").value(2.20));
+
+        mockMvc.perform(get("/api/egresos/reporte")
+                        .param("fechaInicio", "2026-06-01")
+                        .param("fechaFin", "2026-06-30"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].paisNombre").value("Argentina"))
+                .andExpect(jsonPath("$[0].monedaCodigo").value("ARS"))
+                .andExpect(jsonPath("$[0].egresos.length()").value(1))
+                .andExpect(jsonPath("$[0].egresos[0].concepto").value("Impuesto de exportación"))
+                .andExpect(jsonPath("$[0].egresos[0].importeMonedaLocal").value(2000.00))
+                .andExpect(jsonPath("$[0].egresos[0].importeUsd").value(2.20))
+                .andExpect(jsonPath("$[0].totalMonedaLocal").value(2000.00))
+                .andExpect(jsonPath("$[0].totalUsd").value(2.20));
+    }
+
+    @Test
     void obtenerReporte_conEgresosEnElRango_devuelveAgrupadoPorPaisConSubtotales() throws Exception {
         Pais argentina = buscarPaisPorNombre("Argentina");
         TipoCambio tipoCambio = tipoCambioRepository.save(new TipoCambio(null, argentina,
