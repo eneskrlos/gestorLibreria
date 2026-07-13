@@ -158,7 +158,7 @@ Todos los errores tienen un mensaje claro en español.
 ## Fase 10 — Pruebas y Ajuste Final
 **Objetivo:** Validar el sistema completo de extremo a extremo.
 
-- [ ] Prueba completa del flujo de egresos: alta → conversión → reporte
+- [x] Prueba completa del flujo de egresos: alta → conversión → reporte
 - [ ] Prueba del reporte de ingresos con distintos filtros
 - [ ] Prueba del sistema de licencias: sin licencia, con licencia vigente, con licencia vencida
 - [ ] Prueba del fallback de tipo de cambio (simular fallo de API)
