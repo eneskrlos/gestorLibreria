@@ -1,5 +1,6 @@
 package com.libreria.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -141,6 +142,33 @@ class EgresoControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("Recurso no encontrado"))
                 .andExpect(jsonPath("$.mensaje").value("No se encontró el país con id 999"));
+    }
+
+    @Test
+    void registrarEgreso_conApiCaidaYTipoCambioPrevioEnBd_usaElUltimoValorComoFallback() throws Exception {
+        Pais argentina = buscarPaisPorNombre("Argentina");
+        tipoCambioRepository.save(new TipoCambio(null, argentina, new BigDecimal("0.001000"),
+                LocalDateTime.now().minusDays(1), FuenteTipoCambio.API));
+        when(exchangeRateApiClient.obtenerValorUsd("ARS"))
+                .thenThrow(new ExchangeRateApiException("timeout"));
+
+        EgresoRequestDto request = new EgresoRequestDto();
+        request.setFecha(LocalDate.now());
+        request.setConcepto("Arancel aduanero");
+        request.setImporteMonedaLocal(new BigDecimal("1000.00"));
+        request.setPaisId(argentina.getId());
+
+        mockMvc.perform(post("/api/egresos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.importeUsd").value(1.00))
+                .andExpect(jsonPath("$.importeMonedaLocal").value(1000.00));
+
+        boolean existeTipoCambioManual = tipoCambioRepository.findTopByPaisOrderByFechaConsultaDesc(argentina)
+                .map(tc -> tc.getFuente() == FuenteTipoCambio.MANUAL)
+                .orElse(false);
+        assertThat(existeTipoCambioManual).isTrue();
     }
 
     @Test
